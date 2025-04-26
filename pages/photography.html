@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography - Jason Clark</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Photography Page Specific Styles */
+        .photography-section {
+            padding: 6rem 0;
+        }
+        
+        .photography-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .photography-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .photography-header p {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .filter-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .filter-btn {
+            padding: 8px 20px;
+            background-color: var(--light-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            height: 300px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: var(--secondary-color);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-item-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-item-overlay h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .gallery-item-overlay p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        /* Lightbox Styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80vh;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 2rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 2rem;
+        }
+        
+        .lightbox-prev, .lightbox-next {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .lightbox-prev:hover, .lightbox-next:hover {
+            color: var(--accent-color);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .filter-categories {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">Jason Clark</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="photography.html" class="active">Photography</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="files.html">Files</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="donate.html">Donate</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-solid">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="photography-section">
+        <div class="container">
+            <div class="photography-header">
+                <h1>Photography Portfolio</h1>
+                <p>Capturing moments and emotions through the lens. My photography portfolio showcases a unique perspective on the world around us, from breathtaking landscapes to intimate portraits.</p>
+            </div>
+
+            <div class="filter-categories">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="nature">Nature</button>
+                <button class="filter-btn" data-filter="portrait">Portrait</button>
+                <button class="filter-btn" data-filter="urban">Urban</button>
+                <button class="filter-btn" data-filter="abstract">Abstract</button>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Gallery items will be populated dynamically or with placeholder images -->
+                <div class="gallery-item" data-category="nature">
+                    <img src="../images/photo-placeholder-1.jpg" alt="Nature Photography">
+                    <div class="gallery-item-overlay">
+                        <h3>Mountain Sunrise</h3>
+                        <p>Capturing the first light of day over the mountain range.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="portrait">
+                    <img src="../images/photo-placeholder-2.jpg" alt="Portrait Photography">
+                    <div class="gallery-item-overlay">
+                        <h3>Urban Portrait</h3>
+                        <p>A candid moment in the city streets.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="urban">
+                    <img src="../images/photo-placeholder-3.jpg" alt="Urban Photography">
+                    <div class="gallery-item-overlay">
+                        <h3>City Lights</h3>
+                        <p>The vibrant energy of the city at night.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="abstract">
+                    <img src="../images/photo-placeholder-4.jpg" alt="Abstract Photography">
+                    <div class="gallery-item-overlay">
+                        <h3>Patterns in Nature</h3>
+                        <p>Finding abstract beauty in natural forms.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="nature">
+                    <img src="../images/photo-placeholder-5.jpg" alt="Nature Photography">
+                    <div class="gallery-item-overlay">
+                        <h3>Ocean Waves</h3>
+                        <p>The rhythmic motion of the sea captured in time.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="portrait">
+                    <img src="../images/photo-placeholder-6.jpg" alt="Portrait Photography">
+                    <div class="gallery-item-overlay">
+                        <h3>Contemplation</h3>
+                        <p>A moment of quiet reflection.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="urban">
+                    <img src="../images/photo-placeholder-7.jpg" alt="Urban Photography">
+                    <div class="gallery-item-overlay">
+                        <h3>Urban Geometry</h3>
+                        <p>The fascinating patterns of modern architecture.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="abstract">
+                    <img src="../images/photo-placeholder-8.jpg" alt="Abstract Photography">
+                    <div class="gallery-item-overlay">
+                        <h3>Light and Shadow</h3>
+                        <p>Playing with contrast and form.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="nature">
+                    <img src="../images/photo-placeholder-9.jpg" alt="Nature Photography">
+                    <div class="gallery-item-overlay">
+                        <h3>Forest Path</h3>
+                        <p>A journey through the ancient woods.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">&times;</span>
+            <img src="" alt="" class="lightbox-image">
+            <div class="lightbox-caption"></div>
+            <div class="lightbox-nav">
+                <span class="lightbox-prev"><i class="fas fa-chevron-left"></i></span>
+                <span class="lightbox-next"><i class="fas fa-chevron-right"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Jason Clark</h3>
+                    <p>Developer • Photographer • Author • Music Producer</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="resume.html">Resume</a></li>
+                            <li><a href="photography.html">Photography</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="music.html">Music</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="files.html">Files</a></li>
+                            <li><a href="register.html">Register</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="donate.html">Donate</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:realjasontclark@gmail.com">realjasontclark@gmail.com</a></li>
+                            <li><a href="tel:8013001201">(801) 300-1201</a></li>
+                            <li>Willard, UT 84340</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://soundcloud.com/discover/sets/artist-stations:1434711140" target="_blank"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Jason Clark. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Photography Gallery Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Lightbox functionality
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImage = document.querySelector('.lightbox-image');
+            const lightboxCaption = document.querySelector('.lightbox-caption');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const lightboxPrev = document.querySelector('.lightbox-prev');
+            const lightboxNext = document.querySelector('.lightbox-next');
+            
+            let currentIndex = 0;
+            const visibleItems = () => Array.from(galleryItems).filter(item => item.style.display !== 'none');
+            
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const items = visibleItems();
+                    currentIndex = items.indexOf(this);
+                    
+                    const imgSrc = this.querySelector('img').getAttribute('src');
+                    const caption = this.querySelector('h3').textContent;
+                    
+                    lightboxImage.setAttribute('src', imgSrc);
+                    lightboxCaption.textContent = caption;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            lightboxClose.addEventListener('click', function() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            lightboxPrev.addEventListener('click', function() {
+                const items = visibleItems();
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                
+                const imgSrc = items[currentIndex].querySelector('img').getAttribute('src');
+                const caption = items[currentIndex].querySelector('h3').textContent;
+                
+                lightboxImage.setAttribute('src', imgSrc);
+                lightboxCaption.textContent = caption;
+            });
+            
+            lightboxNext.addEventListener('click', function() {
+                const items = visibleItems();
+                currentIndex = (currentIndex + 1) % items.length;
+                
+                const imgSrc = items[currentIndex].querySelector('img').getAttribute('src');
+                const caption = items[currentIndex].querySelector('h3').textContent;
+                
+                lightboxImage.setAttribute('src', imgSrc);
+                lightboxCaption.textContent = caption;
+            });
+            
+            // Close lightbox when clicking outside the image
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                } else if (e.key === 'ArrowLeft') {
+                    lightboxPrev.click();
+                } else if (e.key === 'ArrowRight') {
+                    lightboxNext.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

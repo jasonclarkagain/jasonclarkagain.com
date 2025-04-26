@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Jason Clark</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Blog Page Specific Styles */
+        .blog-section {
+            padding: 6rem 0;
+        }
+        
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .blog-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-header p {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .blog-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            padding-right: 50px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .search-bar button:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .filter-dropdowns {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .filter-dropdown {
+            position: relative;
+        }
+        
+        .filter-dropdown select {
+            padding: 12px 20px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 50px;
+            background-color: var(--secondary-color);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            cursor: pointer;
+            appearance: none;
+            padding-right: 40px;
+        }
+        
+        .filter-dropdown::after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        
+        .blog-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .blog-post {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .blog-post:hover {
+            transform: translateY(-10px);
+        }
+        
+        .blog-post-header {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .blog-post-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .blog-post:hover .blog-post-header img {
+            transform: scale(1.05);
+        }
+        
+        .blog-post-category {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .blog-post-content {
+            padding: 2rem;
+        }
+        
+        .blog-post-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+        }
+        
+        .blog-post-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .blog-post-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-post-excerpt {
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .pagination-item:hover, .pagination-item.active {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .blog-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+            }
+            
+            .filter-dropdowns {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">Jason Clark</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="photography.html">Photography</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="blog.html" class="active">Blog</a></li>
+                    <li><a href="files.html">Files</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="donate.html">Donate</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-solid">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="blog-section">
+        <div class="container">
+            <div class="blog-header">
+                <h1>Blog</h1>
+                <p>Explore my thoughts, insights, and experiences across various topics including technology, photography, writing, and music production.</p>
+            </div>
+
+            <div class="blog-filters">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search articles...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="filter-dropdowns">
+                    <div class="filter-dropdown">
+                        <select>
+                            <option value="">All Categories</option>
+                            <option value="technology">Technology</option>
+                            <option value="photography">Photography</option>
+                            <option value="writing">Writing</option>
+                            <option value="music">Music</option>
+                        </select>
+                    </div>
+                    <div class="filter-dropdown">
+                        <select>
+                            <option value="">All Tags</option>
+                            <option value="tutorial">Tutorials</option>
+                            <option value="opinion">Opinion</option>
+                            <option value="review">Reviews</option>
+                            <option value="showcase">Showcase</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blog-posts">
+                <!-- Blog Post 1 -->
+                <article class="blog-post">
+                    <div class="blog-post-header">
+                        <img src="../images/blog-placeholder-1.jpg" alt="Blog Post Image">
+                        <div class="blog-post-category">Technology</div>
+                    </div>
+                    <div class="blog-post-content">
+                        <div class="blog-post-meta">
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-calendar"></i>
+                                <span>April 10, 2025</span>
+                            </div>
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-user"></i>
+                                <span>Jason Clark</span>
+                            </div>
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-comment"></i>
+                                <span>12 Comments</span>
+                            </div>
+                        </div>
+                        <h2 class="blog-post-title">The Future of Web Development: Trends to Watch in 2025</h2>
+                        <p class="blog-post-excerpt">As we navigate through 2025, the landscape of web development continues to evolve at a rapid pace. From AI-driven design tools to new frameworks that prioritize performance and accessibility, this article explores the cutting-edge trends shaping the future of the web.</p>
+                        <a href="#" class="btn btn-outline">Read More</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="blog-post">
+                    <div class="blog-post-header">
+                        <img src="../images/blog-placeholder-2.jpg" alt="Blog Post Image">
+                        <div class="blog-post-category">Photography</div>
+                    </div>
+                    <div class="blog-post-content">
+                        <div class="blog-post-meta">
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-calendar"></i>
+                                <span>March 28, 2025</span>
+                            </div>
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-user"></i>
+                                <span>Jason Clark</span>
+                            </div>
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-comment"></i>
+                                <span>8 Comments</span>
+                            </div>
+                        </div>
+                        <h2 class="blog-post-title">Mastering Light and Shadow: Advanced Techniques for Dramatic Photography</h2>
+                        <p class="blog-post-excerpt">Light and shadow are the fundamental elements that can transform an ordinary photograph into a compelling visual story. In this comprehensive guide, I share advanced techniques for manipulating light to create mood, depth, and drama in your photography.</p>
+                        <a href="#" class="btn btn-outline">Read More</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="blog-post">
+                    <div class="blog-post-header">
+                        <img src="../images/blog-placeholder-3.jpg" alt="Blog Post Image">
+                        <div class="blog-post-category">Writing</div>
+                    </div>
+                    <div class="blog-post-content">
+                        <div class="blog-post-meta">
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-calendar"></i>
+                                <span>March 15, 2025</span>
+                            </div>
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-user"></i>
+                                <span>Jason Clark</span>
+                            </div>
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-comment"></i>
+                                <span>5 Comments</span>
+                            </div>
+                        </div>
+                        <h2 class="blog-post-title">From Concept to Publication: My Journey as an Author</h2>
+                        <p class="blog-post-excerpt">The path from initial concept to published book is filled with challenges, revelations, and growth. In this personal essay, I reflect on my experiences as an author, sharing insights into my creative process, the publishing industry, and lessons learned along the way.</p>
+                        <a href="#" class="btn btn-outline">Read More</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 4 -->
+                <article class="blog-post">
+                    <div class="blog-post-header">
+                        <img src="../images/blog-placeholder-4.jpg" alt="Blog Post Image">
+                        <div class="blog-post-category">Music</div>
+                    </div>
+                    <div class="blog-post-content">
+                        <div class="blog-post-meta">
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-calendar"></i>
+                                <span>February 28, 2025</span>
+                            </div>
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-user"></i>
+                                <span>Jason Clark</span>
+                            </div>
+                            <div class="blog-post-meta-item">
+                                <i class="far fa-comment"></i>
+                                <span>10 Comments</span>
+                            </div>
+                        </div>
+                        <h2 class="blog-post-title">The Art of Mixing: Creating Depth and Clarity in Your Music Productions</h2>
+                        <p class="blog-post-excerpt">A well-mixed track can elevate good music to greatness. This technical deep dive explores advanced mixing techniques that help create spatial depth, tonal clarity, and emotional impact in your music productions, with practical examples from my own work.</p>
+                        <a href="#" class="btn btn-outline">Read More</a>
+                    </div>
+                </article>
+            </div>
+
+            <div class="blog-pagination">
+                <div class="pagination-item active">1</div>
+                <div class="pagination-item">2</div>
+                <div class="pagination-item">3</div>
+                <div class="pagination-item">4</div>
+                <div class="pagination-item"><i class="fas fa-chevron-right"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Jason Clark</h3>
+                    <p>Developer • Photographer • Author • Music Producer</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="resume.html">Resume</a></li>
+                            <li><a href="photography.html">Photography</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="music.html">Music</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="files.html">Files</a></li>
+                            <li><a href="register.html">Register</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="donate.html">Donate</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:realjasontclark@gmail.com">realjasontclark@gmail.com</a></li>
+                            <li><a href="tel:8013001201">(801) 300-1201</a></li>
+                            <li>Willard, UT 84340</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://soundcloud.com/discover/sets/artist-stations:1434711140" target="_blank"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Jason Clark. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Blog Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search functionality
+            const searchInput = document.querySelector('.search-bar input');
+            const blogPosts = document.querySelectorAll('.blog-post');
+            
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    
+                    blogPosts.forEach(post => {
+                        const title = post.querySelector('.blog-post-title').textContent.toLowerCase();
+                        const excerpt = post.querySelector('.blog-post-excerpt').textContent.toLowerCase();
+                        const category = post.querySelector('.blog-post-category').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || excerpt.includes(searchTerm) || category.includes(searchTerm)) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Category filter functionality
+            const categorySelect = document.querySelector('.filter-dropdown select:first-child');
+            
+            if (categorySelect) {
+                categorySelect.addEventListener('change', function() {
+                    const selectedCategory = this.value.toLowerCase();
+                    
+                    if (selectedCategory === '') {
+                        blogPosts.forEach(post => {
+                            post.style.display = 'block';
+                        });
+                        return;
+                    }
+                    
+                    blogPosts.forEach(post => {
+                        const category = post.querySelector('.blog-post-category').textContent.toLowerCase();
+                        
+                        if (category === selectedCategory) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Pagination functionality
+            const paginationItems = document.querySelectorAll('.pagination-item');
+            
+            paginationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    paginationItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // In a real implementation, this would load new content or navigate to a new page
+                    // For this demo, we'll just scroll to the top of the blog section
+                    document.querySelector('.blog-section').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

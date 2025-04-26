@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Jason Clark</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Resume Page Specific Styles */
+        .resume-section {
+            padding: 6rem 0;
+        }
+        
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+        }
+        
+        .profile-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-info h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+        
+        .download-btn {
+            margin-top: 1rem;
+        }
+        
+        .section-heading {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .experience-card, .education-card {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .experience-card:last-child, .education-card:last-child {
+            border-bottom: none;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-subtitle {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-date {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            font-style: italic;
+        }
+        
+        .card-content ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .card-content ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .skill-category {
+            margin-bottom: 2rem;
+        }
+        
+        .skill-category h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .skill-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        
+        .skill-item i {
+            margin-right: 0.8rem;
+            color: var(--primary-color);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            
+            .card-header {
+                flex-direction: column;
+            }
+            
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">Jason Clark</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="resume.html" class="active">Resume</a></li>
+                    <li><a href="photography.html">Photography</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="files.html">Files</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="donate.html">Donate</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-solid">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="resume-section">
+        <div class="container">
+            <div class="profile-section">
+                <img src="../images/profile-placeholder.jpg" alt="Jason Clark" class="profile-image">
+                <div class="profile-info">
+                    <h1>Jason Clark</h1>
+                    <h2>Developer • Photographer • Author • Music Producer</h2>
+                    <p>Highly skilled and results-oriented professional with over 25 years of experience encompassing manufacturing, fabrication, and information systems. Proven ability to operate and maintain complex machinery, with a strong focus on quality control and process improvement.</p>
+                    <a href="../resume.txt" download class="btn btn-primary download-btn">Download Resume</a>
+                </div>
+            </div>
+
+            <div class="career-summary">
+                <h2 class="section-heading">Career Summary</h2>
+                <p>Highly Skilled and results-oriented professional with over 25 years of experience encompassing manufacturing, fabrication, and information systems. Proven ability to operate and maintain complex machinery, including NC turret presses, brake presses, mills, and lathes, with a strong focus on quality control and process improvement. Demonstrated expertise in welding, painting, and installation of fabricated structures. Possesses exceptional troubleshooting, communication, leadership, and teamwork skills.</p>
+            </div>
+
+            <div class="work-experience">
+                <h2 class="section-heading">Work Experience</h2>
+                
+                <div class="experience-card">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Computer Consultant</h3>
+                            <p class="card-subtitle">Victoria Supply Company</p>
+                        </div>
+                        <p class="card-date">May 2019 - Present</p>
+                    </div>
+                    <div class="card-content">
+                        <p>Network administrator/engineer responsible for maintaining and managing the organization's computer networks, encompassing hardware installation and configuration, performance monitoring, troubleshooting, security, user support, and network architecture design, backups, and updates.</p>
+                        <ul>
+                            <li>Designed computer network to meet the needs of the organization.</li>
+                            <li>Maintain computer network and resolve technical issues.</li>
+                            <li>Created several custom systems to store and retrieve data.</li>
+                            <li>Keep the computer network up to date with new technology.</li>
+                            <li>Implemented and maintain network security measures.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Quality Control & Laboratory Technician</h3>
+                            <p class="card-subtitle">Biofire Diagnostics</p>
+                        </div>
+                        <p class="card-date">January 2018 - May 2019</p>
+                    </div>
+                    <div class="card-content">
+                        <p>Quality control and laboratory specialist responsible for overseeing product testing, material analysis, and process validation, while managing data systems to ensure compliance with industry standards. Conduct laboratory experiments, analyze results, and maintain equipment to support quality assurance and operational efficiency.</p>
+                        <ul>
+                            <li>Perform laboratory testing on raw materials and finished products to verify compliance with specifications, using tools such as spectrometers, calipers, and micrometers.</li>
+                            <li>Develop and implement quality control protocols to monitor production processes and reduce defects.</li>
+                            <li>Design and maintain custom data systems to store, retrieve, and analyze laboratory and quality control data.</li>
+                            <li>Troubleshoot technical issues in testing equipment and laboratory workflows, ensuring consistent accuracy and reliability.</li>
+                            <li>Collaborate with production teams to integrate quality control findings into process improvements.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">NC Turret Press/Brake Press/Upright Mill/Lathe Operator</h3>
+                            <p class="card-subtitle">Metalcraft Technologies Inc.</p>
+                        </div>
+                        <p class="card-date">March 1993 - September 2004</p>
+                    </div>
+                    <div class="card-content">
+                        <p>Die Setter, Fabrication Operator, Machine Operator, Machine Setter, Press Operator, Punch Press Operator, Saw Operator, Set-Up Operator, Slitter Operator</p>
+                        <ul>
+                            <li>Read work orders or production schedules to determine specifications, such as materials to be used, locations of cutting lines, or dimensions and tolerances.</li>
+                            <li>Install, align, and lock specified punches, dies, cutting blades, or other fixtures in rams or beds of machines, using gauges, templates, feelers, shims, and hand tools.</li>
+                            <li>Position guides, stops, holding blocks, or other fixtures to secure and direct workpieces, using hand tools and measuring devices.</li>
+                            <li>Measure completed workpieces to verify conformance to specifications, using micrometers, gauges, calipers, templates, or rulers.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="education">
+                <h2 class="section-heading">Education</h2>
+                
+                <div class="education-card">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Master of Science in Information Systems</h3>
+                            <p class="card-subtitle">San Diego State University</p>
+                        </div>
+                        <p class="card-date">2005 - 2009</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="technical-skills">
+                <h2 class="section-heading">Technical Skills</h2>
+                
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3>Technical Expertise</h3>
+                        <div class="skill-item"><i class="fas fa-cogs"></i> Machine operation</div>
+                        <div class="skill-item"><i class="fas fa-check-circle"></i> Quality control</div>
+                        <div class="skill-item"><i class="fas fa-tools"></i> Troubleshooting</div>
+                        <div class="skill-item"><i class="fas fa-chart-line"></i> Process improvement</div>
+                        <div class="skill-item"><i class="fas fa-search"></i> Attention to detail</div>
+                        <div class="skill-item"><i class="fas fa-shield-alt"></i> Safety protocols</div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Professional Skills</h3>
+                        <div class="skill-item"><i class="fas fa-sync-alt"></i> Adaptability</div>
+                        <div class="skill-item"><i class="fas fa-briefcase"></i> Work ethic</div>
+                        <div class="skill-item"><i class="fas fa-clock"></i> Time management</div>
+                        <div class="skill-item"><i class="fas fa-users"></i> Teamwork</div>
+                        <div class="skill-item"><i class="fas fa-comments"></i> Communication</div>
+                        <div class="skill-item"><i class="fas fa-user-tie"></i> Leadership</div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>IT & Development</h3>
+                        <div class="skill-item"><i class="fas fa-boxes"></i> Inventory management</div>
+                        <div class="skill-item"><i class="fas fa-robot"></i> Automation</div>
+                        <div class="skill-item"><i class="fas fa-database"></i> Backup management</div>
+                        <div class="skill-item"><i class="fas fa-cloud"></i> Cloud computing</div>
+                        <div class="skill-item"><i class="fas fa-chart-bar"></i> Data analysis</div>
+                        <div class="skill-item"><i class="fas fa-lock"></i> Encryption</div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Additional Skills</h3>
+                        <div class="skill-item"><i class="fas fa-shield-alt"></i> Firewall configuration</div>
+                        <div class="skill-item"><i class="fas fa-palette"></i> Graphic design</div>
+                        <div class="skill-item"><i class="fas fa-desktop"></i> Hardware maintenance</div>
+                        <div class="skill-item"><i class="fas fa-headset"></i> IT support</div>
+                        <div class="skill-item"><i class="fab fa-js"></i> JavaScript development</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Jason Clark</h3>
+                    <p>Developer • Photographer • Author • Music Producer</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="resume.html">Resume</a></li>
+                            <li><a href="photography.html">Photography</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="music.html">Music</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="files.html">Files</a></li>
+                            <li><a href="register.html">Register</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="donate.html">Donate</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:realjasontclark@gmail.com">realjasontclark@gmail.com</a></li>
+                            <li><a href="tel:8013001201">(801) 300-1201</a></li>
+                            <li>Willard, UT 84340</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://soundcloud.com/discover/sets/artist-stations:1434711140" target="_blank"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Jason Clark. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

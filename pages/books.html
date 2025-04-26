@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books - Jason Clark</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Books Page Specific Styles */
+        .books-section {
+            padding: 6rem 0;
+        }
+        
+        .books-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .books-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .books-header p {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .books-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        
+        .book-card {
+            display: flex;
+            gap: 2rem;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .book-cover {
+            flex: 0 0 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .book-card:hover .book-cover img {
+            transform: scale(1.05);
+        }
+        
+        .book-details {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .book-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-subtitle {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .book-description {
+            margin-bottom: 1.5rem;
+        }
+        
+        .book-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .book-meta-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .book-meta-item i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .book-purchase {
+            margin-top: auto;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .book-purchase-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .book-purchase-btn i {
+            font-size: 1.2rem;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .book-card {
+                flex-direction: column;
+            }
+            
+            .book-cover {
+                flex: 0 0 auto;
+                height: 300px;
+            }
+            
+            .book-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .book-purchase {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">Jason Clark</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="photography.html">Photography</a></li>
+                    <li><a href="books.html" class="active">Books</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="files.html">Files</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="donate.html">Donate</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-solid">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="books-section">
+        <div class="container">
+            <div class="books-header">
+                <h1>Published Books</h1>
+                <p>Explore my collection of published works, spanning various genres and topics. Each book represents a journey of creativity, research, and storytelling.</p>
+            </div>
+
+            <div class="books-showcase">
+                <!-- Book 1 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="../images/book-placeholder-1.jpg" alt="Book Cover">
+                    </div>
+                    <div class="book-details">
+                        <h2 class="book-title">The Digital Frontier</h2>
+                        <h3 class="book-subtitle">Navigating the Future of Technology</h3>
+                        <p class="book-description">An insightful exploration of how emerging technologies are reshaping our world and what the future might hold. This book combines technical knowledge with accessible explanations to guide readers through the complex landscape of modern innovation.</p>
+                        <div class="book-meta">
+                            <div class="book-meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Published: 2023</span>
+                            </div>
+                            <div class="book-meta-item">
+                                <i class="fas fa-book-open"></i>
+                                <span>Pages: 320</span>
+                            </div>
+                            <div class="book-meta-item">
+                                <i class="fas fa-tags"></i>
+                                <span>Technology, Future, Innovation</span>
+                            </div>
+                        </div>
+                        <div class="book-purchase">
+                            <a href="https://www.amazon.com" target="_blank" class="btn btn-primary book-purchase-btn">
+                                <i class="fab fa-amazon"></i>
+                                <span>Buy on Amazon</span>
+                            </a>
+                            <a href="#" class="btn btn-secondary book-purchase-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Buy Direct</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="../images/book-placeholder-2.jpg" alt="Book Cover">
+                    </div>
+                    <div class="book-details">
+                        <h2 class="book-title">Captured Moments</h2>
+                        <h3 class="book-subtitle">A Photographer's Journey</h3>
+                        <p class="book-description">A visual narrative combining stunning photography with personal stories and technical insights. This coffee table book showcases a collection of my most impactful photographs, each accompanied by the story behind the image and the techniques used to capture it.</p>
+                        <div class="book-meta">
+                            <div class="book-meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Published: 2022</span>
+                            </div>
+                            <div class="book-meta-item">
+                                <i class="fas fa-book-open"></i>
+                                <span>Pages: 180</span>
+                            </div>
+                            <div class="book-meta-item">
+                                <i class="fas fa-tags"></i>
+                                <span>Photography, Art, Visual Storytelling</span>
+                            </div>
+                        </div>
+                        <div class="book-purchase">
+                            <a href="https://www.amazon.com" target="_blank" class="btn btn-primary book-purchase-btn">
+                                <i class="fab fa-amazon"></i>
+                                <span>Buy on Amazon</span>
+                            </a>
+                            <a href="#" class="btn btn-secondary book-purchase-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Buy Direct</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="../images/book-placeholder-3.jpg" alt="Book Cover">
+                    </div>
+                    <div class="book-details">
+                        <h2 class="book-title">Harmonies of the Soul</h2>
+                        <h3 class="book-subtitle">The Art and Science of Music Production</h3>
+                        <p class="book-description">A comprehensive guide to music production that bridges the gap between technical knowledge and artistic expression. Drawing from years of experience in the industry, this book offers insights into recording techniques, composition, and the emotional impact of sound.</p>
+                        <div class="book-meta">
+                            <div class="book-meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Published: 2021</span>
+                            </div>
+                            <div class="book-meta-item">
+                                <i class="fas fa-book-open"></i>
+                                <span>Pages: 275</span>
+                            </div>
+                            <div class="book-meta-item">
+                                <i class="fas fa-tags"></i>
+                                <span>Music, Production, Audio Engineering</span>
+                            </div>
+                        </div>
+                        <div class="book-purchase">
+                            <a href="https://www.amazon.com" target="_blank" class="btn btn-primary book-purchase-btn">
+                                <i class="fab fa-amazon"></i>
+                                <span>Buy on Amazon</span>
+                            </a>
+                            <a href="#" class="btn btn-secondary book-purchase-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Buy Direct</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Jason Clark</h3>
+                    <p>Developer • Photographer • Author • Music Producer</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="resume.html">Resume</a></li>
+                            <li><a href="photography.html">Photography</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="music.html">Music</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="files.html">Files</a></li>
+                            <li><a href="register.html">Register</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="donate.html">Donate</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:realjasontclark@gmail.com">realjasontclark@gmail.com</a></li>
+                            <li><a href="tel:8013001201">(801) 300-1201</a></li>
+                            <li>Willard, UT 84340</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://soundcloud.com/discover/sets/artist-stations:1434711140" target="_blank"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Jason Clark. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

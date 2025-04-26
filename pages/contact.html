@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Jason Clark</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Contact Page Specific Styles */
+        .contact-section {
+            padding: 6rem 0;
+        }
+        
+        .contact-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-header p {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .contact-form {
+            background-color: var(--light-gray);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .contact-form h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .contact-map {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            height: 100%;
+            min-height: 400px;
+        }
+        
+        .contact-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .contact-info {
+            margin-top: 3rem;
+        }
+        
+        .contact-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .contact-info-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-info-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-info-content p, .contact-info-content a {
+            color: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .contact-info-content a:hover {
+            color: var(--primary-color);
+        }
+        
+        .social-links {
+            margin-top: 3rem;
+            text-align: center;
+        }
+        
+        .social-links h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-icons-large {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .social-icon-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .social-icon-large:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-map {
+                min-height: 300px;
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">Jason Clark</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="photography.html">Photography</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="files.html">Files</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                    <li><a href="donate.html">Donate</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-solid">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-header">
+                <h1>Contact Me</h1>
+                <p>Have a question, project idea, or just want to say hello? Feel free to reach out using the contact form or through any of the provided contact methods.</p>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-form">
+                    <h2>Send a Message</h2>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+
+                <div class="contact-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47937.83775883263!2d-112.05953869999999!3d41.41018545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87530e94e8abe5c7%3A0x5f7f7946b8668565!2sWillard%2C%20UT%2084340!5e0!3m2!1sen!2sus!4v1681475621983!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <div class="contact-info-items">
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h3>Email</h3>
+                            <a href="mailto:realjasontclark@gmail.com">realjasontclark@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h3>Phone</h3>
+                            <a href="tel:8013001201">(801) 300-1201</a>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h3>Location</h3>
+                            <p>Willard, UT 84340</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <h2>Connect on Social Media</h2>
+                <div class="social-icons-large">
+                    <a href="#" class="social-icon-large">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon-large">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon-large">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon-large">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://soundcloud.com/discover/sets/artist-stations:1434711140" class="social-icon-large">
+                        <i class="fab fa-soundcloud"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Jason Clark</h3>
+                    <p>Developer • Photographer • Author • Music Producer</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="resume.html">Resume</a></li>
+                            <li><a href="photography.html">Photography</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="music.html">Music</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="files.html">Files</a></li>
+                            <li><a href="register.html">Register</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="donate.html">Donate</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:realjasontclark@gmail.com">realjasontclark@gmail.com</a></li>
+                            <li><a href="tel:8013001201">(801) 300-1201</a></li>
+                            <li>Willard, UT 84340</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://soundcloud.com/discover/sets/artist-stations:1434711140" target="_blank"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Jason Clark. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Contact Form Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // In a real implementation, this would send the form data to a server
+                    // For this demo, we'll just show an alert
+                    alert(`Thank you for your message, ${name}! I'll get back to you soon.`);
+                    
+                    // Reset form
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

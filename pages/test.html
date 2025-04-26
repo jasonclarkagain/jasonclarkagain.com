@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jason Clark Portfolio - Test Page</title>
+    <link rel="stylesheet" href="../css/unique-style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .test-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 9999;
+            font-family: monospace;
+        }
+        
+        .test-controls h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .test-controls button {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .test-controls button:hover {
+            background-color: #1b5e20;
+        }
+        
+        .test-controls .viewport-size {
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+        
+        .test-log {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 9998;
+            font-family: monospace;
+            display: none;
+        }
+        
+        .test-log h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .test-log ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        
+        .test-log li {
+            margin-bottom: 5px;
+        }
+        
+        .test-log .success {
+            color: #4caf50;
+        }
+        
+        .test-log .error {
+            color: #f44336;
+        }
+        
+        .test-log .warning {
+            color: #ff9800;
+        }
+        
+        .test-log .info {
+            color: #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas for birds animation -->
+    <canvas id="birds-canvas"></canvas>
+    
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="../images/logo.png" alt="Jason Clark Logo">
+                <div class="logo-text">Jason Clark</div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../pages/resume.html">About</a></li>
+                    <li><a href="../pages/services.html">Services</a></li>
+                    <li><a href="../pages/photography.html">Photography</a></li>
+                    <li><a href="../pages/books.html">Books</a></li>
+                    <li><a href="../pages/music.html">Music</a></li>
+                    <li><a href="../pages/blog.html">Blog</a></li>
+                    <li><a href="../pages/files.html">Files</a></li>
+                    <li><a href="../pages/contact.html">Contact</a></li>
+                    <li><a href="../pages/donate.html">Donate</a></li>
+                    <li><a href="../pages/hire-me.html">Hire Me</a></li>
+                </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Test Controls -->
+    <div class="test-controls">
+        <h3>Test Controls</h3>
+        <div class="viewport-size">
+            Viewport: <span id="viewport-width">0</span> x <span id="viewport-height">0</span>
+        </div>
+        <button id="run-tests">Run All Tests</button>
+        <button id="toggle-log">Show Test Log</button>
+        <button id="test-mobile-menu">Test Mobile Menu</button>
+        <button id="test-responsive">Test Responsive</button>
+        <button id="test-accessibility">Test Accessibility</button>
+        <button id="test-performance">Test Performance</button>
+    </div>
+    
+    <!-- Test Log -->
+    <div class="test-log" id="test-log">
+        <h3>Test Log</h3>
+        <ul id="log-entries"></ul>
+    </div>
+    
+    <!-- Main Content -->
+    <main>
+        <section class="test-section">
+            <div class="container">
+                <h1>Website Testing Page</h1>
+                <p>This page is used to test the functionality and responsive design of the portfolio website.</p>
+                
+                <h2>Test Components</h2>
+                
+                <!-- Test Form -->
+                <div class="test-component">
+                    <h3>Form Testing</h3>
+                    <form id="test-form" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">Submit Test</button>
+                        <div id="form-status" class="form-status"></div>
+                    </form>
+                </div>
+                
+                <!-- Image Loading Test -->
+                <div class="test-component">
+                    <h3>Image Loading Test</h3>
+                    <div class="test-images">
+                        <img src="../images/nature_sunset.jpeg" alt="Test Image 1" width="300">
+                        <img data-src="../images/nature_moon.jpeg" alt="Lazy Loaded Image" width="300">
+                        <img src="../images/nature_wonders.jpeg" alt="Test Image 3" width="300">
+                    </div>
+                </div>
+                
+                <!-- Responsive Elements Test -->
+                <div class="test-component">
+                    <h3>Responsive Elements Test</h3>
+                    <div class="responsive-test-grid">
+                        <div class="grid-item">Item 1</div>
+                        <div class="grid-item">Item 2</div>
+                        <div class="grid-item">Item 3</div>
+                        <div class="grid-item">Item 4</div>
+                    </div>
+                </div>
+                
+                <!-- Interactive Elements Test -->
+                <div class="test-component">
+                    <h3>Interactive Elements Test</h3>
+                    <div class="interactive-test">
+                        <button class="btn btn-primary ripple">Test Button</button>
+                        <div class="service-package">
+                            <div class="package-header">
+                                <h3 class="package-title">Test Package</h3>
+                            </div>
+                            <div class="package-content">
+                                <p>Hover over this element to test interactions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accessibility Test -->
+                <div class="test-component">
+                    <h3>Accessibility Test</h3>
+                    <div class="accessibility-test">
+                        <div class="contrast-test">
+                            <p>This text should have sufficient contrast.</p>
+                        </div>
+                        <div class="focus-test">
+                            <button class="btn">Focus Test Button</button>
+                            <a href="#" class="test-link">Focus Test Link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="../images/logo.png" alt="Jason Clark Logo">
+                        <div class="footer-logo-text">Jason Clark</div>
+                    </div>
+                    <p class="footer-about">Test page for portfolio website functionality.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="footer-title">Test Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Test Link 1</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Test Link 2</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Test Link 3</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Jason Clark. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="../js/birdsAnimation.js"></script>
+    <script src="../js/responsive.js"></script>
+    <script src="../js/test-suite.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update viewport size
+            function updateViewportSize() {
+                document.getElementById('viewport-width').textContent = window.innerWidth;
+                document.getElementById('viewport-height').textContent = window.innerHeight;
+            }
+            
+            updateViewportSize();
+            window.addEventListener('resize', updateViewportSize);
+            
+            // Test log functions
+            const logEntries = document.getElementById('log-entries');
+            
+            function logMessage(message, type = 'info') {
+                const entry = document.createElement('li');
+                entry.className = type;
+                entry.textContent = message;
+                logEntries.appendChild(entry);
+                
+                // Auto-scroll to bottom
+                const testLog = document.getElementById('test-log');
+                testLog.scrollTop = testLog.scrollHeight;
+            }
+            
+            // Toggle test log
+            document.getElementById('toggle-log').addEventListener('click', function() {
+                const testLog = document.getElementById('test-log');
+                if (testLog.style.display === 'none' || testLog.style.display === '') {
+                    testLog.style.display = 'block';
+                    this.textContent = 'Hide Test Log';
+                } else {
+                    testLog.style.display = 'none';
+                    this.textContent = 'Show Test Log';
+                }
+            });
+            
+            // Run all tests
+            document.getElementById('run-tests').addEventListener('click', function() {
+                logEntries.innerHTML = '';
+                logMessage('Running all tests...', 'info');
+                
+                // Add test=true to URL to enable visual test report
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.set('test', 'true');
+                window.history.replaceState({}, '', currentUrl);
+                
+                // Reload page with test parameter
+                window.location.reload();
+            });
+            
+            // Test mobile menu
+            document.getElementById('test-mobile-menu').addEventListener('click', function() {
+                logMessage('Testing mobile menu...', 'info');
+                
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                const navMenu = document.querySelector('.nav-menu');
+                
+                if (!mobileMenuBtn || !navMenu) {
+                    logMessage('Mobile menu elements not found', 'error');
+                    return;
+                }
+                
+                // Click to open
+                mobileMenuBtn.click();
+                logMessage('Mobile menu opened', 'success');
+                
+                // Wait and click to close
+                setTimeout(function() {
+                    mobileMenuBtn.click();
+                    logMessage('Mobile menu closed', 'success');
+                    logMessage('Mobile menu test completed', 'info');
+                }, 1500);
+            });
+            
+            // Test responsive
+            document.getElementById('test-responsive').addEventListener('click', function() {
+                logMessage('Testing responsive design...', 'info');
+                
+                // Test different viewport sizes
+                const viewportSizes = [
+                    { width: 1200, height: 800, name: 'Desktop' },
+                    { width: 992, height: 800, name: 'Small Desktop' },
+                    { width: 768, height: 800, name: 'Tablet' },
+                    { width: 576, height: 800, name: 'Mobile' },
+                    { width: 320, height: 800, name: 'Small Mobile' }
+                ];
+                
+                let currentIndex = 0;
+                
+                function testNextViewport() {
+                    if (currentIndex >= viewportSizes.length) {
+                        logMessage('Responsive design test completed', 'info');
+                        // Reset to original size
+                        window.resizeTo(window.screen.availWidth, window.screen.availHeight);
+                        return;
+                    }
+                    
+                    const viewport = viewportSizes[currentIndex];
+                    logMessage(`Testing ${viewport.name} (${viewport.width}x${viewport.height})`, 'info');
+                    
+                    // Attempt to resize window (may not work in all browsers due to security)
+                    try {
+                        window.resizeTo(viewport.width, viewport.height);
+                        logMessage(`Viewport resized to ${viewport.width}x${viewport.height}`, 'success');
+                    } catch (error) {
+                        logMessage(`Cannot resize window: ${error.message}`, 'warning');
+                        logMessage('Please manually resize your browser window to test responsive design', 'info');
+                    }
+                    
+                    currentIndex++;
+                    setTimeout(testNextViewport, 2000);
+                }
+                
+                testNextViewport();
+            });
+            
+            // Test accessibility
+            document.getElementById('test-accessibility').addEventListener('click', function() {
+                logMessage('Testing accessibility...', 'info');
+                
+                // Test image alt tags
+                const images = document.querySelectorAll('img');
+                let missingAlt = 0;
+                
+                images.forEach(img => {
+                    if (!img.hasAttribute('alt')) {
+                        missingAlt++;
+                        logMessage(`Image missing alt tag: ${img.src}`, 'warning');
+                    }
+                });
+                
+                if (missingAlt === 0) {
+                    logMessage('All images have alt tags', 'success');
+                } else {
+                    logMessage(`${missingAlt} images missing alt tags`, 'error');
+                }
+                
+                // Test form labels
+                const formInputs = document.querySelectorAll('input, textarea, select');
+                let missingLabels = 0;
+                
+                formInputs.forEach(input => {
+                    // Skip hidden inputs and submit buttons
+                    if (input.type === 'hidden' || input.type === 'submit' || input.type === 'button') return;
+                    
+                    const id = input.id;
+                    if (!id) {
+                        missingLabels++;
+                        logMessage(`Input missing ID: ${input.name || 'unnamed input'}`, 'warning');
+                        return;
+                    }
+                    
+                    const label = document.querySelector(`label[for="${id}"]`);
+                    if (!label) {
+                        missingLabels++;
+                        logMessage(`Input missing label: ${id}`, 'warning');
+                    }
+                });
+                
+                if (missingLabels === 0) {
+                    logMessage('All form inputs have labels', 'success');
+                } else {
+                    logMessage(`${missingLabels} form inputs missing labels`, 'error');
+                }
+                
+                logMessage('Accessibility test completed', 'info');
+            });
+            
+            // Test performance
+            document.getElementById('test-performance').addEventListener('click', function() {
+                logMessage('Testing performance...', 'info');
+                
+                if (window.performance) {
+                    const perfData = window.performance.timing;
+                    const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                    
+                    logMessage(`Page load time: ${pageLoadTime}ms`, 'info');
+                    
+                    if (pageLoadTime < 1000) {
+                        logMessage('Page load time is excellent (< 1s)', 'success');
+                    } else if (pageLoadTime < 3000) {
+                        logMessage('Page load time is good (< 3s)', 'success');
+                    } else {
+                        logMessage('Page load time needs improvement (> 3s)', 'warning');
+                    }
+                    
+                    // More detailed metrics
+                    const dnsTime = perfData.domainLookupEnd - perfData.domainLookupStart;
+                    logMessage(`DNS lookup time: ${dnsTime}ms`, 'info');
+                    
+                    const connectionTime = perfData.connectEnd - perfData.connectStart;
+                    logMessage(`Connection time: ${connectionTime}ms`, 'info');
+                    
+                    const requestTime = perfData.responseEnd - perfData.requestStart;
+                    logMessage(`Request/response time: ${requestTime}ms`, 'info');
+                    
+                    const domProcessingTime = perfData.domComplete - perfData.domLoading;
+                    logMessage(`DOM processing time: ${domProcessingTime}ms`, 'info');
+                } else {
+                    logMessage('Performance API not supported in this browser', 'error');
+                }
+                
+                // Count resources
+                if (window.performance && window.performance.getEntriesByType) {
+                    const resources = window.performance.getEntriesByType('resource');
+                    
+                    const resourceTypes = {
+                        script: 0,
+                        css: 0,
+                        image: 0,
+                        font: 0,
+                        other: 0
+                    };
+                    
+                    resources.forEach(resource => {
+                        const url = resource.name;
+                        if (url.endsWith('.js')) {
+                            resourceTypes.script++;
+                        } else if (url.endsWith('.css')) {
+                            resourceTypes.css++;
+                        } else if (url.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) {
+                            resourceTypes.image++;
+                        } else if (url.match(/\.(woff|woff2|ttf|otf|eot)$/i)) {
+                            resourceTypes.font++;
+                        } else {
+                            resourceTypes.other++;
+                        }
+                    });
+                    
+                    logMessage(`Resource count: ${resources.length} total`, 'info');
+                    logMessage(`- Scripts: ${resourceTypes.script}`, 'info');
+                    logMessage(`- CSS: ${resourceTypes.css}`, 'info');
+                    logMessage(`- Images: ${resourceTypes.image}`, 'info');
+                    logMessage(`- Fonts: ${resourceTypes.font}`, 'info');
+                    logMessage(`- Other: ${resourceTypes.other}`, 'info');
+                }
+                
+                logMessage('Performance test completed', 'info');
+            });
+            
+            // Test form submission
+            document.getElementById('test-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formStatus = document.getElementById('form-status');
+                formStatus.textContent = 'Form submitted successfully!';
+                formStatus.className = 'form-status success';
+                formStatus.style.display = 'block';
+                
+                logMessage('Form submitted successfully', 'success');
+                
+                setTimeout(function() {
+                    formStatus.style.display = 'none';
+                }, 3000);
+            });
+            
+            // Initialize lazy loading for test
+            const lazyImages = document.querySelectorAll('[data-src]');
+            
+            if (lazyImages.length > 0 && 'IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.getAttribute('data-src');
+                            img.removeAttribute('data-src');
+                            imageObserver.unobserve(img);
+                            logMessage('Lazy image loaded', 'success');
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(function(img) {
+                    imageObserver.observe(img);
+                });
+                
+                logMessage('Lazy loading initialized', 'info');
+            }
+            
+            // Check if we're in test mode
+            if (window.location.search.includes('test=true')) {
+                logMessage('Test mode activated', 'info');
+                document.getElementById('test-log').style.display = 'block';
+                document.getElementById('toggle-log').textContent = 'Hide Test Log';
+            }
+        });
+    </script>
+</body>
+</html>

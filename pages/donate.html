@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - Jason Clark</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Donation Page Specific Styles */
+        .donation-section {
+            padding: 6rem 0;
+        }
+        
+        .donation-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .donation-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .donation-header p {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .donation-tiers {
+            margin-bottom: 4rem;
+        }
+        
+        .donation-tiers h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tiers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tier-card {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .tier-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .tier-card.featured {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+        
+        .tier-card.featured h3, .tier-card.featured .tier-price {
+            color: var(--secondary-color);
+        }
+        
+        .tier-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tier-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .tier-features {
+            margin-bottom: 1.5rem;
+        }
+        
+        .tier-features ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .tier-features ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .tier-features ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        
+        .tier-card.featured .tier-features ul li::before {
+            color: var(--secondary-color);
+        }
+        
+        .tier-card .btn {
+            width: 100%;
+        }
+        
+        .tier-card.featured .btn {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .tier-card.featured .btn:hover {
+            background-color: transparent;
+            color: var(--secondary-color);
+        }
+        
+        .custom-amount {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .custom-amount h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .custom-amount p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .custom-amount-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .amount-input-group {
+            position: relative;
+            width: 100%;
+        }
+        
+        .amount-input-group span {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .amount-input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 40px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .amount-input-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .payment-methods {
+            margin-bottom: 4rem;
+        }
+        
+        .payment-methods h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .payment-option {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .payment-option:hover, .payment-option.active {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .payment-option i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .payment-option h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+        
+        .payment-form {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .payment-form h3 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .card-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+        
+        .donation-note {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+        }
+        
+        .donation-note h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .donation-note p {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .tiers-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">Jason Clark</a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="photography.html">Photography</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="files.html">Files</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="donate.html" class="active">Donate</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-solid">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="donation-section">
+        <div class="container">
+            <div class="donation-header">
+                <h1>Support My Work</h1>
+                <p>Your generous donations help me continue creating content, developing new projects, and sharing my work with the world. Choose a donation tier or customize your contribution amount.</p>
+            </div>
+
+            <div class="donation-tiers">
+                <h2>Choose a Donation Tier</h2>
+                <div class="tiers-container">
+                    <div class="tier-card">
+                        <h3>Supporter</h3>
+                        <div class="tier-price">$5</div>
+                        <div class="tier-features">
+                            <ul>
+                                <li>Access to exclusive blog posts</li>
+                                <li>Monthly newsletter</li>
+                                <li>Name in supporters list</li>
+                            </ul>
+                        </div>
+                        <a href="#payment-form" class="btn btn-primary tier-btn" data-amount="5">Select</a>
+                    </div>
+                    
+                    <div class="tier-card">
+                        <h3>Enthusiast</h3>
+                        <div class="tier-price">$10</div>
+                        <div class="tier-features">
+                            <ul>
+                                <li>All Supporter benefits</li>
+                                <li>Early access to new content</li>
+                                <li>Exclusive digital downloads</li>
+                            </ul>
+                        </div>
+                        <a href="#payment-form" class="btn btn-primary tier-btn" data-amount="10">Select</a>
+                    </div>
+                    
+                    <div class="tier-card featured">
+                        <h3>Patron</h3>
+                        <div class="tier-price">$25</div>
+                        <div class="tier-features">
+                            <ul>
+                                <li>All Enthusiast benefits</li>
+                                <li>Monthly Q&A sessions</li>
+                                <li>Behind-the-scenes content</li>
+                                <li>Discount on merchandise</li>
+                            </ul>
+                        </div>
+                        <a href="#payment-form" class="btn btn-primary tier-btn" data-amount="25">Select</a>
+                    </div>
+                    
+                    <div class="tier-card">
+                        <h3>Benefactor</h3>
+                        <div class="tier-price">$50</div>
+                        <div class="tier-features">
+                            <ul>
+                                <li>All Patron benefits</li>
+                                <li>Personalized thank you note</li>
+                                <li>Input on future projects</li>
+                                <li>Exclusive virtual meetups</li>
+                            </ul>
+                        </div>
+                        <a href="#payment-form" class="btn btn-primary tier-btn" data-amount="50">Select</a>
+                    </div>
+                    
+                    <div class="tier-card">
+                        <h3>Champion</h3>
+                        <div class="tier-price">$100</div>
+                        <div class="tier-features">
+                            <ul>
+                                <li>All Benefactor benefits</li>
+                                <li>One-on-one consultation</li>
+                                <li>Featured sponsor on website</li>
+                                <li>Early beta access to new projects</li>
+                            </ul>
+                        </div>
+                        <a href="#payment-form" class="btn btn-primary tier-btn" data-amount="100">Select</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="custom-amount">
+                <h2>Custom Donation Amount</h2>
+                <p>Choose your own donation amount to support my work at a level that's comfortable for you.</p>
+                <div class="custom-amount-form">
+                    <div class="amount-input-group">
+                        <span>$</span>
+                        <input type="number" id="custom-amount" min="1" step="1" placeholder="Enter amount">
+                    </div>
+                    <a href="#payment-form" class="btn btn-primary" id="custom-amount-btn">Continue</a>
+                </div>
+            </div>
+
+            <div class="payment-methods">
+                <h2>Select Payment Method</h2>
+                <div class="payment-options">
+                    <div class="payment-option" data-method="crypto">
+                        <i class="fab fa-bitcoin"></i>
+                        <h3>Cryptocurrency</h3>
+                    </div>
+                    <div class="payment-option" data-method="venmo">
+                        <i class="fab fa-vimeo-v"></i>
+                        <h3>Venmo</h3>
+                    </div>
+                    <div class="payment-option" data-method="cashapp">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h3>Cash App</h3>
+                    </div>
+                    <div class="payment-option active" data-method="card">
+                        <i class="far fa-credit-card"></i>
+                        <h3>Credit Card</h3>
+                    </div>
+                    <div class="payment-option" data-method="paypal">
+                        <i class="fab fa-paypal"></i>
+                        <h3>PayPal</h3>
+                    </div>
+                    <div class="payment-option" data-method="zelle">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h3>Zelle</h3>
+                    </div>
+                </div>
+
+                <div class="payment-form" id="payment-form">
+                    <h3>Credit Card Payment</h3>
+                    <div class="card-icons">
+                        <i class="fab fa-cc-visa card-icon"></i>
+                        <i class="fab fa-cc-mastercard card-icon"></i>
+                        <i class="fab fa-cc-amex card-icon"></i>
+                        <i class="fab fa-cc-discover card-icon"></i>
+                    </div>
+                    <form id="donation-form">
+                        <div class="form-group">
+                            <label for="card-name">Name on Card</label>
+                            <input type="text" id="card-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" class="form-control" placeholder="XXXX XXXX XXXX XXXX" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiry-date">Expiry Date</label>
+                                <input type="text" id="expiry-date" class="form-control" placeholder="MM/YY" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" class="form-control" placeholder="XXX" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="donation-amount">Donation Amount</label>
+                            <div class="amount-input-group">
+                                <span>$</span>
+                                <input type="text" id="donation-amount" class="form-control" value="25" readonly>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Complete Donation</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="donation-note">
+                <h2>Thank You for Your Support</h2>
+                <p>Your generous contributions make it possible for me to continue creating and sharing my work. Every donation, regardless of size, is deeply appreciated and helps fuel my creative journey.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Jason Clark</h3>
+                    <p>Developer • Photographer • Author • Music Producer</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="resume.html">Resume</a></li>
+                            <li><a href="photography.html">Photography</a></li>
+                            <li><a href="books.html">Books</a></li>
+                            <li><a href="music.html">Music</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="files.html">Files</a></li>
+                            <li><a href="register.html">Register</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="donate.html">Donate</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:realjasontclark@gmail.com">realjasontclark@gmail.com</a></li>
+                            <li><a href="tel:8013001201">(801) 300-1201</a></li>
+                            <li>Willard, UT 84340</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://soundcloud.com/discover/sets/artist-stations:1434711140" target="_blank"><i class="fab fa-soundcloud"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Jason Clark. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Donation Page Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tier selection
+            const tierButtons = document.querySelectorAll('.tier-btn');
+            const donationAmountInput = document.getElementById('donation-amount');
+            
+            tierButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const amount = this.getAttribute('data-amount');
+                    donationAmountInput.value = amount;
+                    
+                    // Smooth scroll to payment form
+                    document.getElementById('payment-form').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Custom amount
+            const customAmountInput = document.getElementById('custom-amount');
+            const customAmountBtn = document.getElementById('custom-amount-btn');
+            
+            if (customAmountBtn) {
+                customAmountBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const customAmount = customAmountInput.value;
+                    if (customAmount && !isNaN(customAmount) && customAmount > 0) {
+                        donationAmountInput.value = customAmount;
+                        
+                        // Smooth scroll to payment form
+                        document.getElementById('payment-form').scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        alert('Please enter a valid donation amount');
+                    }
+                });
+            }
+            
+            // Payment method selection
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const paymentForm = document.querySelector('.payment-form');
+            const paymentFormTitle = document.querySelector('.payment-form h3');
+            
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove active class from all options
+                    paymentOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    // Update payment form title based on selected method
+                    const method = this.getAttribute('data-method');
+                    let methodTitle = '';
+                    
+                    switch (method) {
+                        case 'crypto':
+                            methodTitle = 'Cryptocurrency Payment';
+                            break;
+                        case 'venmo':
+                            methodTitle = 'Venmo Payment';
+                            break;
+                        case 'cashapp':
+                            methodTitle = 'Cash App Payment';
+                            break;
+                        case 'card':
+                            methodTitle = 'Credit Card Payment';
+                            break;
+                        case 'paypal':
+                            methodTitle = 'PayPal Payment';
+                            break;
+                        case 'zelle':
+                            methodTitle = 'Zelle Payment';
+                            break;
+                        default:
+                            methodTitle = 'Payment Details';
+                    }
+                    
+                    paymentFormTitle.textContent = methodTitle;
+                    
+                    // In a real implementation, this would update the form fields based on the selected payment method
+                });
+            });
+            
+            // Donation form submission
+            const donationForm = document.getElementById('donation-form');
+            
+            if (donationForm) {
+                donationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // In a real implementation, this would process the payment
+                    alert(`Thank you for your donation of $${donationAmountInput.value}! Your support is greatly appreciated.`);
+                    
+                    // Reset form
+                    donationForm.reset();
+                    donationAmountInput.value = '25';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
