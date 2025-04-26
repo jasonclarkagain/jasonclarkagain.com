@@ -1,0 +1,421 @@
+/* Responsive Design Optimization */
+
+/* Base responsive settings already in unique-style.css */
+/* This file contains additional responsive optimizations */
+
+/* Global responsive adjustments */
+@media (max-width: 1200px) {
+  .container {
+    width: 90%;
+    max-width: 1140px;
+  }
+  
+  .section-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+  
+  /* Two column layouts become single column */
+  .about-content,
+  .contact-content,
+  .brand-content,
+  .booking-content,
+  .skills-content {
+    flex-direction: column;
+  }
+  
+  .about-image,
+  .brand-image,
+  .contact-info,
+  .booking-text {
+    margin-bottom: 40px;
+  }
+  
+  /* Grid adjustments */
+  .portfolio-grid,
+  .blog-grid,
+  .books-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Service packages */
+  .service-packages {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .service-package,
+  .premium-package {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 30px;
+  }
+  
+  /* Featured projects */
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .showcase-item.large {
+    grid-column: span 6;
+  }
+  
+  .showcase-item.medium,
+  .showcase-item.small {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Header and navigation */
+  .nav-container {
+    padding: 15px 5%;
+  }
+  
+  .logo img {
+    height: 40px;
+  }
+  
+  .logo-text {
+    font-size: 1.5rem;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 70px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background-color: var(--dark-color);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 30px;
+    transition: all 0.3s ease;
+    z-index: 99;
+  }
+  
+  .nav-menu.active {
+    left: 0;
+  }
+  
+  nav ul li {
+    margin: 15px 0;
+  }
+  
+  .mobile-menu-btn {
+    display: block;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Hero section */
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Section titles */
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  /* Grid adjustments */
+  .portfolio-grid,
+  .blog-grid,
+  .books-grid,
+  .stories-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Showcase grid */
+  .showcase-item.medium,
+  .showcase-item.small {
+    grid-column: span 6;
+  }
+  
+  /* Music player */
+  .player-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .player-cover {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+  
+  /* Footer */
+  .footer-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .footer-column {
+    width: 100%;
+  }
+  
+  /* Expertise areas */
+  .expertise-areas {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .expertise-item {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  /* Hire me section */
+  .hire-me-title {
+    font-size: 2.2rem;
+  }
+  
+  .hire-me-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Container */
+  .container {
+    width: 95%;
+  }
+  
+  /* Hero section */
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  /* Section titles */
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  /* Forms */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-control {
+    padding: 10px;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  /* Testimonials */
+  .testimonial-content {
+    padding: 20px;
+  }
+  
+  .testimonial-text p {
+    font-size: 0.9rem;
+  }
+  
+  /* Brand statement */
+  .brand-text h2 {
+    font-size: 1.8rem;
+  }
+  
+  .brand-signature {
+    font-size: 1.5rem;
+  }
+  
+  /* Premium packages */
+  .package-price {
+    font-size: 2rem;
+  }
+  
+  /* Showcase overlay */
+  .showcase-title {
+    font-size: 1.2rem;
+  }
+  
+  .showcase-description {
+    display: none;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  /* Convert hover effects to tap effects */
+  .btn:hover::before,
+  .nav ul li a:hover::after,
+  .portfolio-item:hover .portfolio-overlay,
+  .blog-link:hover::after,
+  .social-link:hover,
+  .service-package:hover,
+  .expertise-item:hover,
+  .showcase-item:hover .showcase-overlay {
+    transition: none;
+  }
+  
+  /* Make overlays partially visible by default */
+  .portfolio-overlay,
+  .showcase-overlay {
+    opacity: 0.9;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2), transparent);
+  }
+  
+  /* Adjust buttons for touch */
+  .btn,
+  .package-button,
+  .showcase-link,
+  .hire-me-button {
+    padding: 15px 30px; /* Larger touch target */
+  }
+  
+  /* Navigation adjustments */
+  nav ul li {
+    margin: 10px 0;
+    padding: 5px 0;
+  }
+  
+  nav ul li a {
+    padding: 8px 0;
+  }
+}
+
+/* High-resolution screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Optimize images for high-res displays */
+  .hero-image,
+  .about-image img,
+  .portfolio-image,
+  .blog-image img,
+  .book-cover img,
+  .player-cover img,
+  .showcase-image {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Print styles */
+@media print {
+  /* Hide interactive elements */
+  header,
+  footer,
+  .hero-buttons,
+  .scroll-down,
+  .btn,
+  .form-submit,
+  #birds-canvas,
+  .mobile-menu-btn {
+    display: none !important;
+  }
+  
+  /* Optimize colors for printing */
+  body {
+    color: #000;
+    background: #fff;
+    font-size: 12pt;
+  }
+  
+  /* Ensure content is visible */
+  .container {
+    width: 100%;
+    max-width: none;
+  }
+  
+  /* Force page breaks */
+  section {
+    page-break-inside: avoid;
+    margin-bottom: 20pt;
+  }
+  
+  /* Optimize links */
+  a::after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #666;
+  }
+  
+  /* Adjust images */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+}
+
+/* JavaScript-enabled responsive enhancements */
+.js-enabled .mobile-menu-btn {
+  display: block;
+}
+
+.js-enabled .nav-menu {
+  transition: left 0.3s ease;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .floating,
+  .hero-title,
+  .hero-subtitle,
+  .hero-buttons,
+  .skill-progress {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-color: #121212;
+    --text-color: #f5f5f5;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .form-control,
+  .premium-package,
+  .story-card,
+  .service-package {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+  }
+  
+  .form-control {
+    border-color: #333;
+  }
+  
+  .package-features li {
+    border-bottom-color: #333;
+  }
+  
+  .story-text,
+  .package-description,
+  .client-info p {
+    color: #bbb;
+  }
+}
