@@ -1,180 +1,697 @@
-ss
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jason Clark - Portfolio</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Jason Clark - Creative Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Roboto', sans-serif; /* Changed font */
+            overflow-x: hidden; /* Prevent horizontal scroll caused by transitions */
+            background-color: #f0f0f0; /* Fallback background color */
+            color: #333; /* Dark text */
+            line-height: 1.6;
+            /* Background Image Styles */
+            /* IMPORTANT: Ensure '1000005599.jpg' is in the same folder as your HTML file,
+               or update the path below if it's in a different location. */
+            background-image: url('1000005599.jpg'); /* Set the background image */
+            background-size: cover; /* Cover the entire viewport */
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+        }
+
+        /* Style for the Three.js canvas overlay */
+        #threejs-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Position above the background image */
+            pointer-events: none; /* Allow mouse events to pass through to elements below */
+        }
+
+        /* Section padding and margin */
+        section {
+            position: relative; /* Needed for z-index to work correctly */
+            z-index: 2; /* Position above the canvas */
+            padding: 8rem 2rem; /* Increased padding */
+            margin-bottom: 0; /* Removed margin between sections */
+            opacity: 0; /* Start hidden for fade-in effect */
+            transform: translateY(20px); /* Start slightly below */
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            /* Semi-transparent background for readability */
+            background-color: rgba(255, 255, 255, 0.85); /* White with 85% opacity */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            /* Add some margin to separate sections visually */
+            margin-top: 2rem;
+        }
+
+         /* Remove top margin for the first section */
+        #home {
+            margin-top: 0;
+            background-color: transparent; /* Home section background is transparent to show the full image */
+            color: #fff; /* White text for home section */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Add text shadow for readability */
+        }
+
+         #home h1, #home p {
+             color: #fff; /* Ensure text is white on the home section */
+         }
+
+
+        section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Button styling */
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.5rem; /* Adjusted padding */
+            border-radius: 5px; /* Slightly less rounded */
+            font-weight: 700; /* Bolder font */
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* More subtle shadow */
+            text-transform: uppercase; /* Uppercase text */
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background-color: #5a67d8; /* A shade of blue/purple */
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #434190;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid #5a67d8;
+            color: #5a67d8;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a67d8;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Card styling - Not used for main sections anymore, but kept for potential use within sections */
+        .card {
+            background-color: #ffffff; /* White background */
+            border-radius: 8px; /* Rounded corners */
+            padding: 2.5rem; /* Increased padding */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border: 1px solid #e0e0e0; /* Light border */
+        }
+
+        /* Hover effects for links/cards */
+        .hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-effect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Audio player styling */
+        #audio-player {
+            position: fixed;
+            bottom: 1.5rem; /* Adjusted position */
+            left: 1.5rem; /* Adjusted position */
+            z-index: 100; /* Ensure it's above the canvas and sections */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent light background */
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            color: #333; /* Dark text */
+        }
+
+        #audio-player button {
+            background: none;
+            border: none;
+            color: #5a67d8; /* Accent color for button */
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        #audio-player button:hover {
+            color: #434190;
+        }
+
+        /* Video container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px; /* Match card border-radius */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+         /* Responsive resume layout */
+        .resume-section {
+            column-count: 1; /* Default to single column */
+            column-gap: 3rem; /* Increased gap */
+        }
+
+        @media (min-width: 768px) { /* Medium screens and up */
+            .resume-section {
+                column-count: 2; /* Two columns on medium screens */
+            }
+        }
+
+         @media (min-width: 1024px) { /* Large screens and up */
+            .resume-section {
+                column-count: 3; /* Three columns on large screens */
+            }
+        }
+
+        .resume-section h3 {
+            column-span: all; /* Section titles span all columns */
+            margin-bottom: 1.5rem; /* Increased margin */
+            font-size: 1.8rem; /* Larger title */
+            color: #5a67d8; /* Accent color */
+        }
+
+         .resume-section h4 {
+             break-after: avoid-column; /* Keep heading with the following content */
+             font-size: 1.2rem; /* Adjusted size */
+             margin-bottom: 0.5rem;
+             color: #333;
+        }
+
+        .resume-section p, .resume-section ul {
+            font-size: 1rem; /* Adjusted font size */
+            color: #555; /* Slightly lighter text */
+            margin-bottom: 1.5rem; /* Space between paragraphs/lists */
+        }
+
+        .resume-section ul {
+            padding-left: 1.5rem; /* Indent list items */
+        }
+
+
+        /* Image gallery styling */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Slightly larger min size */
+            gap: 1.5rem; /* Increased gap */
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px; /* Match card border-radius */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer; /* Indicate interactivity */
+            object-fit: cover; /* Ensure images cover the space without distortion */
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.03); /* Slightly less enlarge on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Contact form styling */
+        #contact .card input[type="text"],
+        #contact .card input[type="email"],
+        #contact .card textarea {
+            background-color: #ffffff; /* White background */
+            border: 1px solid #ccc; /* Light border */
+            color: #333; /* Dark text */
+            padding: 0.75rem 1rem; /* Adjusted padding */
+            border-radius: 4px;
+            width: 100%;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+         #contact .card input[type="text"]:focus,
+        #contact .card input[type="email"]:focus,
+        #contact .card textarea:focus {
+            border-color: #5a67d8;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(90, 103, 216, 0.6);
+        }
+
+         #contact .card label {
+            color: #555; /* Slightly lighter label text */
+            font-weight: 400;
+         }
+
+         /* Social media icons */
+         .social-icons a {
+            color: #5a67d8; /* Accent color */
+            transition: color 0.3s ease;
+         }
+
+         .social-icons a:hover {
+            color: #434190;
+         }
+
+         /* Header styling for light background */
+        header {
+            position: fixed; /* Ensure header stays on top */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100; /* Ensure header is above everything */
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white header */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem; /* Adjusted padding */
+        }
+
+        header .text-white, header a {
+            color: #333; /* Dark text for header links */
+        }
+
+         header a:hover {
+            color: #5a67d8; /* Accent color on hover */
+         }
+
+        /* Styles for the birds demo info/stats - Hidden as we are not using the full demo UI */
+        #info, #container {
+           display: none;
+        }
+
+
+    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <a href='/'>Jason Clark</a>
-            </div>
+
+    <canvas id="threejs-canvas"></canvas>
+
+    <div id="audio-player">
+        <audio id="background-audio" loop>
+            <source src="your-background-sound.mp3" type="audio/mpeg"> Your browser does not support the audio element.
+        </audio>
+        <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+        <span>Background Sound</span>
+    </div>
+
+    <header class="fixed top-0 left-0 right-0 z-50 p-4 transition duration-300 ease-in-out">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold">Jason Clark</div>
             <nav>
-                <ul class="nav-links">
-                    <li><a class='active' href='/'>Home</a></li>
-		    <li><a class='active' href='/pages/'>Home2</a></li>
-                    <li><a href='/pages/resume'>Resume</a></li>
-                    <li><a href='/pages/photography'>Photography</a></li>
-                    <li><a href='/pages/books'>Books</a></li>
-                    <li><a href='/pages/music'>Music</a></li>
-                    <li><a href='/pages/blog'>Blog</a></li>
-                    <li><a href='https://drive.google.com/drive/folders/121i5_30AyPM2VU-yujPKg5pa0WgLfICD?usp=drive_link'>Files</a></li>
-                    <li><a href='/pages/contact'>Contact</a></li>
-                    <li><a href='/pages/donate'>Donate</a></li>
+                <ul class="flex space-x-4">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#resume">Resume</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                     <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-            <div class="auth-buttons">
-                <a href="pages/login.html" class="btn btn-outline">Login</a>
-                <a href="pages/register.html" class="btn btn-solid">Register</a>
-            </div>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Jason Clark</h1>
-                <h2>Developer • Photographer • Author • Music Producer</h2>
-                <p>Transforming ideas into digital experiences, capturing moments through photography, crafting stories in books, and producing music that resonates.</p>
-                <div class="hero-buttons">
-                    <a href="#talents" class="btn btn-primary">Explore My Work</a>
-                    <a class='btn btn-secondary' href='/pages/contact'>Get In Touch</a>
-                </div>
+    <section id="home" class="relative flex items-center justify-center min-h-screen text-center">
+        <div class="container mx-auto px-4 z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">Jason Clark</h1>
+            <p class="text-xl md:text-2xl mb-8">Creative Professional | Innovator | Artist</p>
+            <div class="space-x-4">
+                <a href="#portfolio" class="btn btn-primary hover-effect">View My Work</a>
+                <a href="#contact" class="btn btn-secondary hover-effect">Get in Touch</a>
             </div>
         </div>
     </section>
 
-    <section id="talents" class="talents">
-        <div class="container">
-            <h2 class="section-title">My Creative Universe</h2>
-            <div class="talents-grid">
-                <div class="talent-card">
-                    <div class="talent-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Development</h3>
-                    <p>With over 25 years of experience in information systems and a Master's degree from San Diego State University, I bring technical expertise to every project.</p>
-                    <a class='btn btn-outline' href='/pages/resume'>View Resume</a>
+    <section id="resume" class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Resume</h2>
+        <div class="resume-section">
+            <h3 class="text-2xl font-semibold mb-4">Career Summary</h3>
+            <p class="text-gray-700 mb-6">Highly Skilled and results-oriented professional with over 25 years of experience encompassing manufacturing, fabrication, and information systems. Proven ability to operate and maintain complex machinery, including NC turret presses, brake presses, mills, and lathes, with a strong focus on quality control and process improvement. Demonstrated expertise in welding, painting, and installation of fabricated structures. Possesses exceptional troubleshooting, communication, leadership, and teamwork skills.</p>
+
+            <h3 class="text-2xl font-semibold mb-4">Education</h3>
+            <p class="text-gray-700 mb-6">Master of Science | Information Systems | San Diego State University 2005 – 2009</p>
+
+            <h3 class="text-2xl font-semibold mb-4">Professional Experience</h3>
+            <h4 class="text-xl font-semibold mb-2">computer consultant | Victoria Supply Company | Ramona, CA</h4>
+            <p class="text-gray-700 mb-4">October 2017 – present</p>
+            <ul class="list-disc list-inside text-gray-700 mb-6">
+                <li>Network administrator/engineer responsible for maintaining and managing the organization's computer networks, encompassing hardware installation and configuration, performance monitoring, troubleshooting, security, user support, and network architecture design, backups, and updates.</li>
+                <li>Designed computer network to meet the needs of the organization</li>
+                <li>Maintain computer network and resolve technical issues</li>
+                <li>Created several custom systems to store and retrieve data</li>
+                <li>Keep the computer network up to date with new technology</li>
+                <li>Implemented and maintain network security measures</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">welder/painter/installer | Iron Rose Welding | Ramona, CA</h4>
+            <p class="text-gray-700 mb-4">January 2005 – February 2017</p>
+             <ul class="list-disc list-inside text-gray-700 mb-6">
+                <li>Welder/Fabricator, painter, and installation of metal structures, encompassing blueprint interpretation, metal shaping and joining, surface preparation and finishing, assembly, and quality/safety assurance.</li>
+                <li>Machining fabrication materials and components</li>
+                <li>Fitting, setting, and installing fabricated structures</li>
+                <li>Cutting and welding with a variety of processes</li>
+                <li>Metal forming, bending, and finishing</li>
+                <li>Repair, design, layout, and estimation</li>
+                <li>Overseeing shop hands or helpers</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">nc turret press/brake press/upright mill/lathe operator | Metalcraft Technologies Inc. | Cedar City, UT</h4>
+            <p class="text-gray-700 mb-4">March 1993 – September 2004</p>
+             <ul class="list-disc list-inside text-gray-700 mb-6">
+                <li>Die Setter, Fabrication Operator, Machine Operator, Machine Setter, Press Operator, Punch Press Operator, Saw Operator, Set-Up Operator, Slitter Operator</li>
+                <li>Read work orders or production schedules to determine specifications, such as materials to be used, locations of cutting lines, or dimensions and tolerances</li>
+                <li>Install, align, and lock specified punches, dies, cutting blades, or other fixtures in rams or beds of machines, using gauges, templates, feelers, shims, and hand tools</li>
+                <li>Position guides, stops, holding blocks, or other fixtures to secure and direct workpieces, using hand tools and measuring devices</li>
+                <li>Measure completed workpieces to verify conformance to specifications, using micrometers, gauges, calipers, templates, or rulers</li>
+            </ul>
+
+            <h3 class="text-2xl font-semibold mb-4">Technical Skills</h3>
+            <p class="text-gray-700 mb-6">Machine operation | Quality control | Troubleshooting | Process improvement | Attention to detail | Safety protocols | Adaptability | Work ethic | Time management | Teamwork | Communication | Leadership | Inventory management | Automation | Backup management | Cloud computing | Data analysis | Encryption | Firewall configuration | Graphic design | Hardware maintenance | IT support | JavaScript development</p>
+        </div>
+    </section>
+
+    <section id="portfolio" class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Portfolio</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="card hover-effect">
+                <h3 class="text-xl font-semibold mb-4">Photography</h3>
+                <p class="text-gray-700 mb-4">Explore my photographic work capturing moments and landscapes.</p>
+                <a href="https://www.frommyeyestoyours.org/" target="_blank" class="btn btn-primary">View Photography Site</a>
+            </div>
+
+            <div class="card hover-effect">
+                <h3 class="text-xl font-semibold mb-4">Books</h3>
+                <p class="text-gray-700 mb-4">Discover the books I have written, available on Amazon.</p>
+                <a href="https://www.amazon.com/stores/Jason-Clark/author/B073RLPYPV?ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true" target="_blank" class="btn btn-primary">Find My Books</a>
+            </div>
+
+            <div class="card hover-effect">
+                <h3 class="text-xl font-semibold mb-4">Music</h3>
+                <p class="text-gray-700 mb-4">Listen to the songs I have created on SoundCloud.</p>
+                <a href="https://m.soundcloud.com/jason-clark-716319682" target="_blank" class="btn btn-primary">Listen on SoundCloud</a>
+            </div>
+
+             <div class="card col-span-1 md:col-span-2 lg:col-span-3 hover-effect">
+                <h3 class="text-xl font-semibold mb-4">Featured Video</h3>
+                 <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/your_video_id" title="Featured Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="talent-card">
-                    <div class="talent-icon">
-                        <i class="fas fa-camera"></i>
-                    </div>
-                    <h3>Photography</h3>
-                    <p>Capturing moments and emotions through the lens, my photography portfolio showcases a unique perspective on the world around us.</p>
-                    <a class='btn btn-outline' href='/pages/photography'>View Gallery</a>
+                <p class="text-gray-700 mt-4">A sample video showcasing my work or interests.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="gallery" class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Image Gallery</h2>
+        <div class="image-gallery">
+            <img src="92538753.jpg" alt="Gallery Image 1">
+            <img src="92538764.jpg" alt="Gallery Image 2">
+            <img src="92538767.jpg" alt="Gallery Image 3">
+            <img src="92626241.jpg" alt="Gallery Image 4">
+            <img src="926306.jpg" alt="Gallery Image 5">
+            <img src="92632160.jpg" alt="Gallery Image 6">
+            <img src="92632173.jpg" alt="Gallery Image 7">
+            <img src="93213200.jpg" alt="Gallery Image 8">
+            <img src="94138869.jpg" alt="Gallery Image 9">
+            <img src="94138871.jpg" alt="Gallery Image 10">
+            </div>
+    </section>
+
+
+    <section id="contact" class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Get in Touch</h2>
+        <div class="max-w-lg mx-auto">
+            <p class="text-gray-700 mb-6 text-center">Have a project in mind or just want to connect? Fill out the form below or reach out via social media.</p>
+
+            <form action="mailto:jasonclarkagain@gmail.com" method="POST" enctype="text/plain" class="space-y-6">
+                 <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                    <input type="text" name="name" id="name" class="w-full px-4 py-2 rounded-md bg-white border border-gray-300 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
                 </div>
-                <div class="talent-card">
-                    <div class="talent-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h3>Books</h3>
-                    <p>As an author, I've published works that engage readers with compelling narratives and thought-provoking ideas.</p>
-                    <a class='btn btn-outline' href='/pages/books'>Explore Books</a>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" id="email" class="w-full px-4 py-2 rounded-md bg-white border border-gray-300 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
                 </div>
-                <div class="talent-card">
-                    <div class="talent-icon">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <h3>Music</h3>
-                    <p>With 50 tracks in my portfolio, my music production spans various genres and emotions, creating soundscapes that resonate with listeners.</p>
-                    <a class='btn btn-outline' href='/pages/music'>Listen Now</a>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                    <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 rounded-md bg-white border border-gray-300 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required></textarea>
                 </div>
-                <div class="talent-card">
-                    <div class="talent-icon">
-                        <i class="fas fa-pen-fancy"></i>
-                    </div>
-                    <h3>Blog</h3>
-                    <p>Through my blog, I share insights, experiences, and knowledge across my various fields of expertise and creative endeavors.</p>
-                    <a class='btn btn-outline' href='/pages/blog'>Read Articles</a>
+                <div>
+                    <button type="submit" class="w-full btn btn-primary">Send Message</button>
                 </div>
-                <div class="talent-card">
-                    <div class="talent-icon">
-                        <i class="fas fa-envelope"></i>
+            </form>
+
+            <p class="text-sm text-gray-600 mt-4 text-center">Note: Submitting this form will open your default email client.</p>
+
+            <div class="mt-8 text-center social-icons">
+                <h3 class="text-xl font-semibold mb-4">Connect on Social Media</h3>
+                <div class="flex justify-center space-x-6 text-3xl">
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a> <a href="#" target="_blank"><i class="fab fa-pinterest"></i></a>
                     </div>
-                    <h3>Contact</h3>
-                    <p>Have a project in mind or just want to connect? Reach out through my contact page and let's start a conversation.</p>
-                    <a class='btn btn-outline' href='/pages/contact'>Get In Touch</a>
-                </div>
+                 <p class="text-gray-700 mt-4">Find me as @jasonclarkagain</p>
             </div>
         </div>
     </section>
 
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to Collaborate?</h2>
-            <p>Whether you're interested in my development services, photography, books, or music, I'm always open to new opportunities and collaborations.</p>
-            <a class='btn btn-primary' href='/pages/contact'>Contact Me</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>Jason Clark</h3>
-                    <p>Developer • Photographer • Author • Music Producer</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Navigation</h4>
-                        <ul>
-                            <li><a href='/'>Home</a></li><li><a href='/pages/'>Home</a></li>
-                            <li><a href='/pages/resume'>Resume</a></li>
-                            <li><a href='/pages/photography'>Photography</a></li>
-                            <li><a href='/pages/books'>Books</a></li>
-                            <li><a href='/pages/music'>Music</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Resources</h4>
-                        <ul>
-                            <li><a href='/pages/blog'>Blog</a></li>
-                            <li><a href='https://drive.google.com/drive/folders/121i5_30AyPM2VU-yujPKg5pa0WgLfICD?usp=drive_link'>Files</a></li>
-                            <li><a href="pages/register.html">Register</a></li>
-                            <li><a href="pages/login.html">Login</a></li>
-                            <li><a href='/pages/donate'>Donate</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Contact</h4>
-                        <ul>
-                            <li><a href="mailto:realjasontclark@gmail.com">realjasontclark@gmail.com</a></li>
-                            <li><a href="tel:8013001201">(801) 300-1201</a></li>
-                            <li>Willard, UT 84340</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="footer-social">
-                    <h4>Connect</h4>
-                    <div class="social-icons">
-                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://soundcloud.com/discover/sets/artist-stations:1434711140" target="_blank"><i class="fab fa-soundcloud"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Jason Clark. All Rights Reserved.</p>
-            </div>
+    <footer class="bg-gray-900 text-gray-400 py-6 text-center">
+        <div class="container mx-auto px-4">
+            <p>© 2023 Jason Clark. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script>
+        // --- Three.js Interactive Particle Overlay ---
+        let scene, camera, renderer, particles, particleGeometry, particleMaterial;
+        let mouseX = 0, mouseY = 0;
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
+
+        function initThreeJS() {
+            // Scene
+            scene = new THREE.Scene();
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 100; // Increased distance to see more particles
+
+            // Renderer
+            // Use WebGLRenderer for better performance and modern features
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threejs-canvas'), alpha: true }); // alpha: true for transparent background
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Particles
+            const particleCount = 5000; // Increased particle count
+            particleGeometry = new THREE.BufferGeometry();
+            const positions = [];
+            const colors = [];
+            const sizes = []; // To store individual particle sizes
+            const color = new THREE.Color();
+
+            // Generate random particle positions, colors, and sizes
+            for (let i = 0; i < particleCount; i++) {
+                // Positions (randomly distributed in a larger box)
+                const x = (Math.random() - 0.5) * 200;
+                const y = (Math.random() - 0.5) * 200;
+                const z = (Math.random() - 0.5) * 200;
+                positions.push(x, y, z);
+
+                // Colors (random shades of very light blue/white)
+                // Adjusted HSL values for lighter colors
+                const hue = Math.random() * 0.1 + 0.6; // Hue between 0.6 (blue) and 0.7 (light blue)
+                const saturation = Math.random() * 0.2 + 0.1; // Lower saturation for less intense color
+                const lightness = Math.random() * 0.3 + 0.7; // Higher lightness for brighter colors
+                color.setHSL(hue, saturation, lightness);
+                colors.push(color.r, color.g, color.b);
+
+                // Sizes (random size)
+                sizes.push(Math.random() * 2 + 1); // Size between 1 and 3
+            }
+
+            particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+            particleGeometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1)); // Add size attribute
+
+            // Material (using ShaderMaterial for custom size based on attribute)
+             particleMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    pointTexture: { value: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png') } // Using a simple disc texture for particles
+                },
+                vertexShader: `
+                    attribute float size;
+                    attribute vec3 customColor;
+                    varying vec3 vColor;
+                    void main() {
+                        vColor = customColor;
+                        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+                        gl_PointSize = size * ( 300.0 / -mvPosition.z ); // Scale size based on distance
+                        gl_Position = projectionMatrix * mvPosition;
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D pointTexture;
+                    varying vec3 vColor;
+                    void main() {
+                        gl_FragColor = vec4( vColor, 1.0 );
+                        gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord ); // Apply texture
+                    }
+                `,
+                blending: THREE.AdditiveBlending,
+                depthTest: false, // Disable depth test for layering effect
+                transparent: true
+            });
+
+
+            // Particle System
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+
+            // Mouse interaction
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function onDocumentMouseMove(event) {
+            // Normalize mouse position to -1 to +1
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = - (event.clientY / window.innerHeight) * 2 + 1; // Invert Y for Three.js coordinates
+        }
+
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio); // Update pixel ratio on resize
+        }
+
+        function animateThreeJS() {
+            requestAnimationFrame(animateThreeJS);
+
+            // Move particles slightly based on mouse position
+            if (particles) {
+                 particles.rotation.x += (mouseY * 0.1 - particles.rotation.x) * 0.05;
+                 particles.rotation.y += (mouseX * 0.1 - particles.rotation.y) * 0.05;
+
+                 // Optional: Animate particles themselves
+                 const positions = particleGeometry.attributes.position.array;
+                 for (let i = 0; i < positions.length; i += 3) {
+                     positions[i] += Math.sin(Date.now() * 0.0005 + positions[i]) * 0.01;
+                     positions[i + 1] += Math.cos(Date.now() * 0.0005 + positions[i + 1]) * 0.01;
+                 }
+                 particleGeometry.attributes.position.needsUpdate = true; // Mark positions as needing update
+            }
+
+
+            renderer.render(scene, camera);
+        }
+
+        // Initialize and start the Three.js animation and scroll animations on window load
+        window.onload = function () {
+            initThreeJS(); // Initialize the Three.js particle overlay
+            animateThreeJS(); // Start the Three.js animation loop
+            initScrollAnimations(); // Initialize scroll animations
+        }
+
+
+        // --- Audio Player Logic ---
+        const audio = document.getElementById('background-audio');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playIcon = '<i class="fas fa-play"></i>';
+        const pauseIcon = '<i class="fas fa-pause"></i>';
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.innerHTML = pauseIcon;
+            } else {
+                audio.pause();
+                playPauseBtn.innerHTML = playIcon;
+            }
+        });
+
+        // Update button icon based on audio state changes
+        audio.onplay = () => {
+            playPauseBtn.innerHTML = pauseIcon;
+        };
+
+        audio.onpause = () => {
+            playPauseBtn.innerHTML = playIcon;
+        };
+
+
+        // --- Scroll Animations (using Intersection Observer) ---
+        function initScrollAnimations() {
+            const sections = document.querySelectorAll('section');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    } else {
+                        // Optional: remove class when not visible if you want elements to re-animate on scroll back
+                        // entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the section is visible
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+             // Smooth scrolling for navigation links using GSAP ScrollToPlugin
+            gsap.registerPlugin(ScrollToPlugin);
+
+            document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    gsap.to(window, {duration: 1, scrollTo: targetId, ease: "power2.inOut"});
+                });
+            });
+        }
+
+        // Initialize everything on window load
+        window.onload = function () {
+             initThreeJS(); // Initialize the Three.js particle overlay
+             animateThreeJS(); // Start the Three.js animation loop
+             initScrollAnimations(); // Initialize scroll animations
+        }
+
+
+    </script>
+
 </body>
 </html>
